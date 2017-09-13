@@ -24,7 +24,6 @@ class GBGnomeTableViewCell: UITableViewCell {
                 lblAge.text = String(gnome.age)
                 
                 if let url = URL.init(string: gnome.thumbnail) {
-                    //imgView.downloadedFrom(url: url)
                     imgView.sd_setImage(with: url, placeholderImage: UIImage(named: "user_placeholder"))
                 }
             }

@@ -54,7 +54,6 @@ class GBDetailViewController: UIViewController, UITableViewDataSource, UITableVi
             arrProfs = gnome.arrProfs
             arrFriends = gnome.arrFriends
             if let url = URL.init(string: gnome.thumbnail) {
-                //imageView.downloadedFrom(url: url)
                 imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "user_placeholder"))
             }
             tableProf.reloadData()
