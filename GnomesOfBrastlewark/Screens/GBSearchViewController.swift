@@ -60,7 +60,7 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
         var arrResults:[GBGnome] = [GBGnome]()
         var searchFound: Bool = false
         for i in 0..<GBGnomes.sharedInstance.arrGnomes.count {
-            let str: String = GBGnomes.sharedInstance.arrGnomes[i].name
+            let str: String = GBGnomes.sharedInstance.arrGnomes[i].name.lowercased()
             if str.range(of:name) != nil {
                 searchFound = true
                 arrResults.append(GBGnomes.sharedInstance.arrGnomes[i])
@@ -105,12 +105,7 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if (searchBar.text != "") {
-            let searchTxt = searchBar.text?.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-            let encodedTxt = searchTxt?.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
-            
-            if (encodedTxt != "") {
-                self.doSearch(name: encodedTxt!)
-            }
+            self.doSearch(name: (searchBar.text?.lowercased())!)
         }
     }
     

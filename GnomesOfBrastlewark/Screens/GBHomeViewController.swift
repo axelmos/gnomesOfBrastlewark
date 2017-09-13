@@ -77,15 +77,6 @@ class GBHomeViewController: UITableViewController {
         }
     }
     
-    func onSearchResultFound(results: [GBGnome]) {
-        arrGnomes = results
-        DispatchQueue.global(qos: .userInitiated).async {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
     @IBAction func onReloadContent (_ sender: AnyObject) {
         loadContent()
     }
