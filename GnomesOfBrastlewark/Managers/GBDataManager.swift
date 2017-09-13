@@ -32,24 +32,6 @@ class GBDataManager {
         }
     }
     
-    
-    /*class func getDataFromFileWithSuccess(success: @escaping ((_ data: NSData) -> Void)) {
-        
-        // Move to background thread
-        DispatchQueue.global(qos: .userInitiated).async {
-            let filePath = Bundle.main.path(forResource: NSLocalizedString("data", comment: ""),ofType:"json")
-            
-            do {
-                let data = try NSData(contentsOfFile:filePath!,
-                                      options: NSData.ReadingOptions.uncached)
-                success(data)
-            } catch {
-                fatalError()
-            }
-        }
-        
-    }*/
-    
     class func loadDataFromURL(url: NSURL, completion:@escaping (_ data: Data?, _ error:Error?) -> Void) {
         let session = URLSession.shared
         
