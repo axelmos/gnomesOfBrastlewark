@@ -10,5 +10,7 @@ Internet availability check. If no internet present you can try to download cont
 
 
 Librares used:
+
 SDWebImage is used to cache the downloaded images
+
 SVProgressHUD is a quick and easy way to show a spinner when loading content
