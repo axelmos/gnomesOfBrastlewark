@@ -58,6 +58,7 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     
     func doSearch(name: String) {
         
+        lblNoResults.isHidden = true
         let arrResults:[GBGnome] = GBGnomes.sharedInstance.gnomes(withName: name)
         
         if arrResults.count > 0 {
