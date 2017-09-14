@@ -22,7 +22,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No content available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hvd-0E-Aie">
-                                    <rect key="frame" x="129.33333333333337" y="28" width="155.66666666666663" height="21"/>
+                                    <rect key="frame" x="129" y="28" width="156" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="tG6-uH-qp9"/>
                                     </constraints>
@@ -467,7 +467,7 @@
                                 </connections>
                             </searchBar>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tY-F5-GxY">
-                                <rect key="frame" x="110" y="337.66666666666669" width="195" height="61"/>
+                                <rect key="frame" x="109.66666666666669" y="337.66666666666669" width="195" height="61"/>
                                 <string key="text">No results. 
 
 Try with a different name.</string>

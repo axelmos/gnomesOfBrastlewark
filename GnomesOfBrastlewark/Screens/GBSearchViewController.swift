@@ -57,17 +57,10 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func doSearch(name: String) {
-        var arrResults:[GBGnome] = [GBGnome]()
-        var searchFound: Bool = false
-        for i in 0..<GBGnomes.sharedInstance.arrGnomes.count {
-            let str: String = GBGnomes.sharedInstance.arrGnomes[i].name.lowercased()
-            if str.range(of:name) != nil {
-                searchFound = true
-                arrResults.append(GBGnomes.sharedInstance.arrGnomes[i])
-            }
-        }
         
-        if searchFound {
+        let arrResults:[GBGnome] = GBGnomes.sharedInstance.gnomes(withName: name)
+        
+        if arrResults.count > 0 {
             if let barViewControllers = self.tabBarController?.viewControllers {
                 let nav = barViewControllers[0] as! UINavigationController
                 let vc = nav.viewControllers.first as! GBHomeViewController
@@ -82,20 +75,13 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func doFilter(color: String) {
-        var arrResults:[GBGnome] = [GBGnome]()
-
-        for i in 0..<GBGnomes.sharedInstance.arrGnomes.count {
-            let str: String = GBGnomes.sharedInstance.arrGnomes[i].hairColor.lowercased()
-            if str.range(of:color) != nil {
-                arrResults.append(GBGnomes.sharedInstance.arrGnomes[i])
-            }
-            
-        }
+        
+        let arrFiltered:[GBGnome] = GBGnomes.sharedInstance.gnomes(withHairColor: color)
         
         if let barViewControllers = self.tabBarController?.viewControllers {
             let nav = barViewControllers[0] as! UINavigationController
             let vc = nav.viewControllers.first as! GBHomeViewController
-            vc.arrSearchResults = arrResults
+            vc.arrSearchResults = arrFiltered
         }
         self.tabBarController?.selectedIndex = 0
     }
