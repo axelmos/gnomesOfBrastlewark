@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "No results. \n\nTry with a different name."; ObjectID = "4tY-F5-GxY"; */
+"4tY-F5-GxY.text" = "No results. \n\nTry with a different name.";
+
+/* Class = "UINavigationItem"; title = "Gnomes of Brastlewark"; ObjectID = "9dz-WU-ROp"; */
+"9dz-WU-ROp.title" = "Gnomes of Brastlewark";
+
+/* Class = "UISearchBar"; placeholder = "Search by Gnome name"; ObjectID = "9n5-uh-giw"; */
+"9n5-uh-giw.placeholder" = "Search by Gnome name";
+
+/* Class = "UINavigationItem"; title = "Search"; ObjectID = "qiP-51-Byy"; */
+"qiP-51-Byy.title" = "Search";
+
+/* Class = "UILabel"; text = "or filter by hair color"; ObjectID = "tCA-6h-iqD"; */
+"tCA-6h-iqD.text" = "or filter by hair color";

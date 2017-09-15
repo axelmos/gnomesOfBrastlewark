@@ -9,23 +9,30 @@
 import UIKit
 import SVProgressHUD
 
-class GBHomeViewController: UITableViewController {
+class GBHomeViewController: UIViewController {
 
     // MARK: - Definitions
     // ----------------------------------------------------
     
     var arrGnomes: [GBGnome] = [GBGnome]()
     var arrSearchResults: [GBGnome] = [GBGnome]()
-    @IBOutlet var btnCancel: UIBarButtonItem!
-    @IBOutlet weak var noContentView: UIView!
+    var mainView: GBHomeView! { return self.view as! GBHomeView }
     
     // MARK: - ViewController lifecycle
     // ----------------------------------------------------
+
+    override func loadView() {
+        view = GBHomeView(frame: UIScreen.main.bounds)
+        mainView.configure()
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.leftBarButtonItem = nil
-        tableView.separatorInset = UIEdgeInsets.zero
+        
+        mainView.tableView.dataSource = self
+        mainView.tableView.delegate = self
+        mainView.btnReload.addTarget(self, action: #selector(GBHomeViewController.loadContent), for: .touchUpInside)
         
         loadContent()
     }
@@ -36,11 +43,11 @@ class GBHomeViewController: UITableViewController {
         // Only for search results...
         if arrSearchResults.count > 0 {
             self.title = String(format:"%d Search Results", arrSearchResults.count)
-            self.navigationItem.leftBarButtonItem = btnCancel
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(GBHomeViewController.onCancelSearch))
             arrGnomes = arrSearchResults
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self.mainView.tableView.reloadData()
                 }
             }
         }
@@ -63,13 +70,14 @@ class GBHomeViewController: UITableViewController {
                 
                 DispatchQueue.global(qos: .userInitiated).async {
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        self.mainView.tableView.reloadData()
                         SVProgressHUD.dismiss()
+                        self.mainView.noContentView.isHidden = true
                     }
                 }
             }
         } else {
-            noContentView.isHidden = false
+            mainView.noContentView.isHidden = false
             
             let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -77,59 +85,50 @@ class GBHomeViewController: UITableViewController {
         }
     }
     
-    @IBAction func onReloadContent (_ sender: AnyObject) {
-        loadContent()
-    }
-    
-    @IBAction func onCancelSearch(_ sender: AnyObject) {
+    func onCancelSearch() {
         self.navigationItem.leftBarButtonItem = nil
         self.title = "Gnomes of Brastlewark"
         arrGnomes = GBGnomes.sharedInstance.arrGnomes
         arrSearchResults = [GBGnome]()
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self.mainView.tableView.reloadData()
             }
         }
     }
+}
+
+// MARK: - UITableViewDataSource
+// ----------------------------------------------------
+
+extension GBHomeViewController: UITableViewDataSource, UITableViewDelegate {
     
-    
-    // MARK: - UITableViewDataSource
-    // ----------------------------------------------------
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrGnomes.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "gnomeCell") as! GBGnomeTableViewCell
-        cell.gnome = arrGnomes[indexPath.row]
+        
+        cell.configureCell(withGnome: arrGnomes[indexPath.row])
         
         return cell
         
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        performSegue(withIdentifier: "showDetailSegue", sender: indexPath)
-    }
-    
-    // MARK: - Navigation
-    // ----------------------------------------------------
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if segue.identifier == "showDetailSegue"{
-            let detailVC = segue.destination as! GBDetailViewController
-            let indexPath = sender as! IndexPath
-            detailVC.gnome = arrGnomes[indexPath.row]
-        }
+        tableView.deselectRow(at: indexPath, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let detailVC = storyboard.instantiateViewController(withIdentifier: "detailVC") as! GBDetailViewController
+        detailVC.gnome = arrGnomes[indexPath.row]
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 

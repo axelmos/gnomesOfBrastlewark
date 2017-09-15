@@ -1,0 +1,52 @@
+/* 
+  Localizable.strings
+  GnomesOfBrastlewark
+
+  Created by Axel Mosiejko on 9/14/17.
+  Copyright © 2017 Axel Mosiejko. All rights reserved.
+*/
+
+// MARK: GBHomeView
+
+"No content available" = "No hay contenido";
+
+"Reload" = "Recargar";
+
+// MARK: GBDetailView
+
+"AGE" = "EDAD";
+
+"WEIGHT" = "PESO";
+
+"HEIGHT" = "ALTURA";
+
+"HAIR" = "PELO";
+
+// MARK: GBGnomeTableViewCell
+
+"Age: %d" = "Edad: %d";
+
+// MARK: GBHomeViewController
+
+"%d Search Results" = "%d Resultados";
+
+"Loading" = "Cargando";
+
+"Warning" = "Atencion";
+
+"No internet connection" = "No hay conexion a internet";
+
+"OK" = "OK";
+
+"Gnomes of Brastlewark" = "Gnomes of Brastlewark";
+
+// MARK: GBSearchViewController
+
+"Search by Gnome name" = "Buscar por nombre";
+
+// MARK: GBDetailViewController
+
+"FRIENDS" = "AMIGOS";
+
+"PROFESSIONS" = "PROFESIONES";
+
