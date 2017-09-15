@@ -141,6 +141,7 @@ extension GBDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
+        view.backgroundColor = UIColor.white
         let lblHeader = UILabel(frame: CGRect(x: 0, y: 13, width: 176, height: 18))
         if tableView == mainView.tableFriends {
             lblHeader.text = NSLocalizedString("FRIENDS", comment: "")
