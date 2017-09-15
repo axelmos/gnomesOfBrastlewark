@@ -87,7 +87,7 @@
                                 </connections>
                             </searchBar>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tY-F5-GxY">
-                                <rect key="frame" x="110" y="338" width="195" height="61"/>
+                                <rect key="frame" x="110" y="248" width="195" height="61"/>
                                 <string key="text">No results. 
 
 Try with a different name.</string>
@@ -172,8 +172,8 @@ Try with a different name.</string>
                             <constraint firstItem="emp-ut-csm" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="ZGJ-HT-axm"/>
                             <constraint firstAttribute="trailing" secondItem="emp-ut-csm" secondAttribute="trailing" id="a5H-FH-leA"/>
                             <constraint firstItem="9n5-uh-giw" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="e6v-Ak-Xcv"/>
+                            <constraint firstItem="4tY-F5-GxY" firstAttribute="top" secondItem="emp-ut-csm" secondAttribute="bottom" constant="39" id="f46-TI-XHQ"/>
                             <constraint firstItem="9n5-uh-giw" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="puk-rF-o3b"/>
-                            <constraint firstItem="4tY-F5-GxY" firstAttribute="centerY" secondItem="QS5-Rx-YEW" secondAttribute="centerY" id="wV6-ML-ZRy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="qiP-51-Byy"/>

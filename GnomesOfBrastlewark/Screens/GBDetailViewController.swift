@@ -19,16 +19,18 @@ class GBDetailViewController: UIViewController {
     var mainView: GBDetailView! { return self.view as! GBDetailView }
     let profsCellReuseIdentifier = "profsCell"
     let friendsCellReuseIdentifier = "friendsCell"
+    var navBarH: CGFloat!
+    var tabBarH: CGFloat!
     
     // MARK: - ViewController lifecycle
     // ----------------------------------------------------
     
     override func loadView() {
-        let navBarH = (self.navigationController?.navigationBar.intrinsicContentSize.height)! + UIApplication.shared.statusBarFrame.height
-        let tabBarH = (self.tabBarController?.tabBar.frame.size.height)!
+        navBarH = (self.navigationController?.navigationBar.intrinsicContentSize.height)! + UIApplication.shared.statusBarFrame.height
+        tabBarH = (self.tabBarController?.tabBar.frame.size.height)!
 
         view = GBDetailView(frame: UIScreen.main.bounds)
-        mainView.configure(navBarHeight: navBarH, tabBarHeight: tabBarH)
+        mainView.setupConstraints(navBarHeight: navBarH, tabBarHeight: tabBarH)
     }
     
     override func viewDidLoad() {
@@ -75,18 +77,14 @@ class GBDetailViewController: UIViewController {
         let _ = self.navigationController?.popViewController(animated: true)
     }
     
+    // MARK: - Device Rotation
+    // ----------------------------------------------------
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        //TODO: Update layout when rotate device
-        
-        /*if UIDevice.current.orientation.isLandscape {
-         
-            mainView.bottomView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
-            mainView.bottomView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 64).isActive = true
-            mainView.bottomView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-            mainView.bottomView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
-        }*/
+        mainView.screenBounds = UIScreen.main.bounds
+        mainView.setupConstraints(navBarHeight: navBarH, tabBarHeight: tabBarH)
     }
 }
 
