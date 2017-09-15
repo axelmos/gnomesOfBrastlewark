@@ -47,6 +47,11 @@ class GBDetailViewController: UIViewController {
         
         setContent()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        onBack()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -109,13 +114,13 @@ extension GBDetailViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == mainView.tableProf {
             cell = tableView.dequeueReusableCell(withIdentifier: profsCellReuseIdentifier)!
             cell.textLabel?.text = arrProfs[indexPath.row]
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: friendsCellReuseIdentifier)!
             cell.textLabel?.text = arrFriends[indexPath.row]
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
         }
         cell.backgroundColor = UIColor.white
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+        cell.textLabel?.textAlignment = .center
         
         return cell
         
@@ -123,6 +128,7 @@ extension GBDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        tableView.deselectRow(at: indexPath, animated: true)
         if tableView == mainView.tableFriends {
             
             let aGnome = GBGnomes.sharedInstance.gnome(withName: arrFriends[indexPath.row])
