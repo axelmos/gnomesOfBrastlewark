@@ -34,13 +34,7 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(GBSearchViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
-        mainView.searchBar.delegate = self
-        mainView.btnPink.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
-        mainView.btnPink.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
-        mainView.btnRed.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
-        mainView.btnGreen.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
-        mainView.btnBlack.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
-        mainView.btnGray.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        setupButtons()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,6 +43,16 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Functions
     // ----------------------------------------------------
+    
+    func setupButtons() {
+        mainView.searchBar.delegate = self
+        mainView.btnPink.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnPink.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnRed.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnGreen.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnBlack.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnGray.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+    }
     
     func onFilterByColor(_ sender: UIButton) {
         switch sender.tag {
@@ -150,7 +154,7 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
                 
                 self.mainView.setupConstraints(navBarHeight: navBarHLand)
             }
-            self.mainView.searchBar.delegate = self
+            self.setupButtons()
         })
         
         super.viewWillTransition(to: size, with: coordinator)
