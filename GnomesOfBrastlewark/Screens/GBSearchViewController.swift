@@ -13,18 +13,34 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     // MARK: - Definitions
     // ----------------------------------------------------
     
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var lblNoResults: UILabel!
-    @IBOutlet weak var filterView: UIView!
+    var mainView: GBSearchView! { return self.view as! GBSearchView }
+    var navBarH: CGFloat!
+    var tabBarH: CGFloat!
     
     // MARK: - ViewController lifecycle
     // ----------------------------------------------------
     
+    override func loadView() {
+        navBarH = (self.navigationController?.navigationBar.intrinsicContentSize.height)! + UIApplication.shared.statusBarFrame.height
+        
+        view = GBSearchView(frame: UIScreen.main.bounds)
+        mainView.setupConstraints(navBarHeight: navBarH)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = NSLocalizedString("Search", comment: "")
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(GBSearchViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
+        
+        mainView.searchBar.delegate = self
+        mainView.btnPink.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnPink.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnRed.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnGreen.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnBlack.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
+        mainView.btnGray.addTarget(self, action: #selector(GBSearchViewController.onFilterByColor(_:)), for: .touchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,7 +50,7 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     // MARK: - Functions
     // ----------------------------------------------------
     
-    @IBAction func onFilterByColor(_ sender: UIButton) {
+    func onFilterByColor(_ sender: UIButton) {
         switch sender.tag {
         case 0:
             doFilter(color:"pink")
@@ -58,7 +74,7 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     
     func doSearch(name: String) {
         
-        lblNoResults.isHidden = true
+        mainView.lblNoResults.isHidden = true
         let arrResults:[GBGnome] = GBGnomes.sharedInstance.gnomes(withName: name)
         
         if arrResults.count > 0 {
@@ -70,8 +86,8 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
             self.tabBarController?.selectedIndex = 0
             
         } else {
-            lblNoResults.isHidden = false
-            searchBar.text = ""
+            mainView.lblNoResults.isHidden = false
+            mainView.searchBar.text = ""
         }
     }
     
@@ -97,7 +113,7 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if (searchBar.text == "Search by Gnome name") {
+        if (searchBar.text == NSLocalizedString("Search by Gnome name", comment: "")) {
             searchBar.text = ""
         }
     }
@@ -108,6 +124,36 @@ class GBSearchViewController: UIViewController, UISearchBarDelegate {
     
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    // MARK: - Device Rotation
+    // ----------------------------------------------------
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+            
+        }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+            //refresh view once rotation is completed not in will transition as it returns incorrect frame size.
+            
+            let navBarHPort = (self.navigationController?.navigationBar.intrinsicContentSize.height)! + UIApplication.shared.statusBarFrame.height
+            
+            let navBarHLand = (self.navigationController?.navigationBar.intrinsicContentSize.height)!
+            
+            if UIApplication.shared.statusBarOrientation == .portrait {
+                // Portrait
+                self.view = GBSearchView(frame: UIScreen.main.bounds)
+                
+                self.mainView.setupConstraints(navBarHeight: navBarHPort)
+            } else {
+                // Landscape
+                self.view = GBSearchView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height - 20))
+                
+                self.mainView.setupConstraints(navBarHeight: navBarHLand)
+            }
+            self.mainView.searchBar.delegate = self
+        })
+        
+        super.viewWillTransition(to: size, with: coordinator)
     }
 }
 

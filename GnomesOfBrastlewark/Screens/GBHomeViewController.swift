@@ -23,7 +23,7 @@ class GBHomeViewController: UIViewController {
 
     override func loadView() {
         view = GBHomeView(frame: UIScreen.main.bounds)
-        mainView.configure()
+        mainView.setupViews()
     }
 
     
@@ -125,8 +125,7 @@ extension GBHomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let detailVC = storyboard.instantiateViewController(withIdentifier: "detailVC") as! GBDetailViewController
+        let detailVC = GBDetailViewController()
         detailVC.gnome = arrGnomes[indexPath.row]
         self.navigationController?.pushViewController(detailVC, animated: true)
     }

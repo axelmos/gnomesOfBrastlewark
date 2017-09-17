@@ -50,3 +50,12 @@
 
 "PROFESSIONS" = "PROFESIONES";
 
+// MARK: GBDSearchViewController
+
+"Search" = "Buscar";
+
+"No results.\r\nTry with a different name." = "Sin resultados.\r\nPrueba con otro nombre.";
+
+"or filter by hair color" = "o filtra por color de cabello";
+
+

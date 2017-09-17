@@ -36,12 +36,7 @@ class GBDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mainView.tableProf.register(UITableViewCell.self, forCellReuseIdentifier: profsCellReuseIdentifier)
-        mainView.tableFriends.register(UITableViewCell.self, forCellReuseIdentifier: friendsCellReuseIdentifier)
-        mainView.tableProf.dataSource = self
-        mainView.tableProf.delegate = self
-        mainView.tableFriends.dataSource = self
-        mainView.tableFriends.delegate = self
+        setTableViewDelegates()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "backBlack"), style: .plain, target: self, action: #selector(GBDetailViewController.onBack))
         
@@ -60,6 +55,15 @@ class GBDetailViewController: UIViewController {
     
     // MARK: - IBActions & Functions
     // ----------------------------------------------------
+    
+    func setTableViewDelegates() {
+        mainView.tableProf.register(UITableViewCell.self, forCellReuseIdentifier: profsCellReuseIdentifier)
+        mainView.tableFriends.register(UITableViewCell.self, forCellReuseIdentifier: friendsCellReuseIdentifier)
+        mainView.tableProf.dataSource = self
+        mainView.tableProf.delegate = self
+        mainView.tableFriends.dataSource = self
+        mainView.tableFriends.delegate = self
+    }
     
     func setContent() {
         if let gnome = gnome {
@@ -86,10 +90,27 @@ class GBDetailViewController: UIViewController {
     // ----------------------------------------------------
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+            
+        }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+            //refresh view once rotation is completed not in will transition as it returns incorrect frame size.
+            
+            if UIApplication.shared.statusBarOrientation == .portrait {
+                // Portrait
+                self.view = GBDetailView(frame: UIScreen.main.bounds)
+                
+                self.mainView.setupConstraints(navBarHeight: self.navBarH, tabBarHeight: self.tabBarH)
+            } else {
+                // Landscape
+                self.view = GBDetailView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height - 20))
+                
+                self.mainView.setupConstraints(navBarHeight: self.navBarH - 20, tabBarHeight: self.tabBarH)
+            }
+            self.setTableViewDelegates()
+            self.setContent()
+        })
         
-        mainView.screenBounds = UIScreen.main.bounds
-        mainView.setupConstraints(navBarHeight: navBarH, tabBarHeight: tabBarH)
+        super.viewWillTransition(to: size, with: coordinator)
     }
 }
 

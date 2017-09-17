@@ -10,22 +10,38 @@ import UIKit
 
 class GBHomeView: UIView {
     
+    // MARK: - Definitions
+    // ----------------------------------------------------
+    
     var tableView: UITableView!
     var noContentView: UIView!
     var btnReload: UIButton!
     
+    // MARK: - init
+    // ----------------------------------------------------
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+        
         tableView = UITableView()
+        noContentView = UIView(frame: CGRect(x: 0, y: 0, width: 414, height: 100))
+        btnReload = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 30))
+        
+        self.addSubview(tableView)
+        tableView.addSubview(noContentView)
+        noContentView.addSubview(btnReload)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Setup Views and Constraints
+    // ----------------------------------------------------
     
-    func configure() {
+    func setupViews() {
+        
+        self.backgroundColor = UIColor.white
         
         // TABLE VIEW
         
@@ -33,8 +49,6 @@ class GBHomeView: UIView {
         tableView.backgroundColor = UIColor.white
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.register(GBGnomeTableViewCell.self, forCellReuseIdentifier: "gnomeCell")
-        
-        self.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
@@ -43,11 +57,9 @@ class GBHomeView: UIView {
         
         // NO CONTENT VIEW
         
-        noContentView = UIView(frame: CGRect(x: 0, y: 0, width: 414, height: 100))
         noContentView.backgroundColor = UIColor.white
         noContentView.isHidden = true
-        tableView.addSubview(noContentView)
-
+        
         let lblNoContent = UILabel()
         lblNoContent.font = UIFont.systemFont(ofSize: 17)
         lblNoContent.text = NSLocalizedString("No content available", comment: "")
@@ -57,12 +69,11 @@ class GBHomeView: UIView {
         lblNoContent.heightAnchor.constraint(equalToConstant: 21).isActive = true
         lblNoContent.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
-        btnReload = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 30))
         btnReload.setTitle(NSLocalizedString("Reload", comment: ""), for: .normal)
         btnReload.setTitleColor(UIColor.blue, for: .normal)
         btnReload.isUserInteractionEnabled = true
         btnReload.isEnabled = true
-        noContentView.addSubview(btnReload)
+        
         btnReload.translatesAutoresizingMaskIntoConstraints = false
         btnReload.topAnchor.constraint(equalTo: lblNoContent.bottomAnchor, constant: 6).isActive = true
         btnReload.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true

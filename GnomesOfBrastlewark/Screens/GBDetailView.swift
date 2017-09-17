@@ -23,7 +23,6 @@ class GBDetailView: UIView {
     var tableFriends: UITableView!
     var bottomView: UIView!
     var topView: UIView!
-    var screenBounds: CGRect!
     var dataView: UIView!
     var dataSubView: UIView!
     var lblAgeTitle: UILabel!
@@ -53,7 +52,6 @@ class GBDetailView: UIView {
         bottomView = UIView(frame: CGRect(x: 20, y: 332, width: 374, height: 384))
         tableProf = UITableView()
         tableFriends = UITableView()
-        screenBounds = frame
         
         self.addSubview(contentView)
         contentView.addSubview(topView)
@@ -82,7 +80,7 @@ class GBDetailView: UIView {
     // MARK: - Setup Views and Constraints
     // ----------------------------------------------------
     
-    func setupViews() {
+    private func setupViews() {
         self.backgroundColor = UIColor.lightGray
         
         contentView.backgroundColor = UIColor.lightGray
@@ -175,7 +173,7 @@ class GBDetailView: UIView {
             topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         } else {
             // Landscape
-            topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -(screenBounds.size.width/2)).isActive = true
+            topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -(self.frame.size.width/2)).isActive = true
         }
         
         // IMAGE VIEW
